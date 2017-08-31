@@ -25,17 +25,23 @@
       <kbd>R</kbd>
       <span class="sound">girl 4</span>
     </div>
-    <div data-key="84" class="key">
-      <kbd>T</kbd>
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
       <span class="sound">girl 5</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">big papa</span>
     </div>
   </div>
 
-  <audio data-key="81" src="sounds/girl1.wav"></audio>
-  <audio data-key="87" src="sounds/girl2.wav"></audio>
-  <audio data-key="69" src="sounds/girl3.wav"></audio>
-  <audio data-key="82" src="sounds/girl4.wav"></audio>
-  <audio data-key="84" src="sounds/girl5.wav"></audio>
+  <audio data-key="81" crossOrigin="anonymous" src="http://192.168.1.246:8080/sounds/girl1.wav"></audio>
+  <audio data-key="87" crossOrigin="anonymous" src="http://192.168.1.246:8080/sounds/girl2.wav"></audio>
+  <audio data-key="69" crossOrigin="anonymous" src="http://192.168.1.246:8080/sounds/girl3.wav"></audio>
+  <audio data-key="82" crossOrigin="anonymous" src="http://192.168.1.246:8080/sounds/girl4.wav"></audio>
+  <audio data-key="84" crossOrigin="anonymous" src="http://192.168.1.246:8080/sounds/girl5.wav"></audio>
+  <audio data-key="65" crossOrigin="anonymous" src="http://192.168.1.246:8080/sounds/girl5.wav"></audio>
+  <audio data-key="83" crossOrigin="anonymous" src="http://192.168.1.246:8080/sounds/bigpapa.wav"></audio>
 
   <script>
     function playSound(keyCode) {
@@ -44,6 +50,7 @@
       if (!audio) return;
 
       audio.currentTime = 0;
+      audio.playbackRate = appState.playbackRate;
       audio.play();
       key.classList.add("playing");
     }
@@ -61,6 +68,21 @@
 
       this.classList.remove("playing");
     }
+
+    const appState = {
+      playbackRate: 1.0,
+      lowpassFrequency: 20000
+    };
+
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const filter = context.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.value = appState.lowpassFrequency;
+
+    document.querySelectorAll("audio").forEach((audio) => {
+      const source = context.createMediaElementSource(audio);
+      source.connect(filter).connect(context.destination);
+    });
 
     const keys = document.querySelectorAll(".key");
     keys.forEach(key => key.addEventListener("transitionend", removeTransition));

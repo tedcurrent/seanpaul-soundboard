@@ -1,0 +1,11 @@
+{
+  "name": "seanpaul-soundboard",
+  "version": "1.0.0",
+  "description": "Sean paul soundboard",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server --cors"
+  },
+  "author": "Teemu Virta",
+  "license": "ISC"
+}
