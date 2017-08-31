@@ -8,30 +8,62 @@
 </head>
 
 <body>
-  <div class="keys">
-    <div data-key="81" class="key">
-      <kbd>Q</kbd>
-      <span class="sound">girl 1</span>
+  <div class="container">
+    <div class="keys">
+      <div data-key="81" class="key">
+        <kbd>Q</kbd>
+        <span class="sound">girl 1</span>
+      </div>
+      <div data-key="87" class="key">
+        <kbd>W</kbd>
+        <span class="sound">girl 2</span>
+      </div>
+      <div data-key="69" class="key">
+        <kbd>E</kbd>
+        <span class="sound">girl 3</span>
+      </div>
+      <div data-key="82" class="key">
+        <kbd>R</kbd>
+        <span class="sound">girl 4</span>
+      </div>
+      <div data-key="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">club</span>
+      </div>
+      <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">big papa</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">jimmy</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">goody</span>
+      </div>
+      <div data-key="90" class="key">
+        <kbd>Z</kbd>
+        <span class="sound">dooo</span>
+      </div>
+      <div data-key="88" class="key">
+        <kbd>X</kbd>
+        <span class="sound">sk</span>
+      </div>
+      <div data-key="67" class="key">
+        <kbd>C</kbd>
+        <span class="sound">sp</span>
+      </div>
+      <div data-key="86" class="key">
+        <kbd>V</kbd>
+        <span class="sound">cool</span>
+      </div>
     </div>
-    <div data-key="87" class="key">
-      <kbd>W</kbd>
-      <span class="sound">girl 2</span>
-    </div>
-    <div data-key="69" class="key">
-      <kbd>E</kbd>
-      <span class="sound">girl 3</span>
-    </div>
-    <div data-key="82" class="key">
-      <kbd>R</kbd>
-      <span class="sound">girl 4</span>
-    </div>
-    <div data-key="65" class="key">
-      <kbd>A</kbd>
-      <span class="sound">girl 5</span>
-    </div>
-    <div data-key="83" class="key">
-      <kbd>S</kbd>
-      <span class="sound">big papa</span>
+    <div class="controllers">
+      <label for="playbackRate">Playback Rate:</label>
+      <input name="playbackRate" type="range" min="0.5" max="2.0" value="1" step="0.01" />
+      <label for="filter">Filter:</label>
+      <input name="filter" type="range" min="0" max="18000" value="18000" step="100" />
     </div>
   </div>
 
@@ -39,8 +71,14 @@
   <audio data-key="87" src="sounds/girl2.wav"></audio>
   <audio data-key="69" src="sounds/girl3.wav"></audio>
   <audio data-key="82" src="sounds/girl4.wav"></audio>
-  <audio data-key="65" src="sounds/girl5.wav"></audio>
+  <audio data-key="65" src="sounds/intheclub.wav"></audio>
   <audio data-key="83" src="sounds/bigpapa.wav"></audio>
+  <audio data-key="68" src="sounds/jimmy.wav"></audio>
+  <audio data-key="70" src="sounds/goody.wav"></audio>
+  <audio data-key="90" src="sounds/dooo.wav"></audio>
+  <audio data-key="88" src="sounds/sk.wav"></audio>
+  <audio data-key="67" src="sounds/sp.wav"></audio>
+  <audio data-key="86" src="sounds/cool.wav"></audio>
 
   <script>
     function playSound(keyCode) {
@@ -49,7 +87,6 @@
       if (!audio) return;
 
       audio.currentTime = 0;
-      audio.playbackRate = appState.playbackRate;
       audio.play();
       key.classList.add("playing");
     }
@@ -70,15 +107,16 @@
 
     const appState = {
       playbackRate: 1.0,
-      lowpassFrequency: 20000
+      filter: 18000
     };
 
     const context = new (window.AudioContext || window.webkitAudioContext)();
     const filter = context.createBiquadFilter();
     filter.type = "lowpass";
-    filter.frequency.value = appState.lowpassFrequency;
+    filter.frequency.value = appState.filter;
 
-    document.querySelectorAll("audio").forEach((audio) => {
+    const audioInputs = document.querySelectorAll("audio");
+    audioInputs.forEach((audio) => {
       const source = context.createMediaElementSource(audio);
       source.connect(filter).connect(context.destination);
     });
@@ -87,6 +125,13 @@
     keys.forEach(key => key.addEventListener("transitionend", removeTransition));
     keys.forEach(key => key.addEventListener("click", (e) => mousePlaySound(key, e)));
     window.addEventListener("keydown", keyboardPlaySound);
+
+    const controllers = document.querySelectorAll("input[type='range']")
+    controllers.forEach(controller => controller.addEventListener("input", () => {
+      appState[controller.name] = controller.value;
+      audioInputs.forEach(audio => audio.playbackRate = appState.playbackRate);
+      filter.frequency.value = appState.filter;
+    }));
   </script>
 </body>
 
