@@ -1,10 +1,15 @@
 function playSound(keyCode) {
-  const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
   const key = document.querySelector(`.key[data-key="${keyCode}"]`);
-  if (!audio) return;
+  if (!key) return;
 
-  audio.currentTime = 0;
-  audio.play();
+  const source = context.createBufferSource();
+
+  source.buffer = buffers[keyCode];
+  source.playbackRate.value = appState.playbackRate;
+  source.connect(filter);
+  filter.frequency.value = appState.filter;
+  filter.connect(context.destination);
+  source.start(0);
   key.classList.add("playing");
 }
 
@@ -25,16 +30,31 @@ const appState = {
   filter: 18000
 };
 
+const sounds = [
+  { key: 81, path: "sounds/girl1.wav" },
+  { key: 87, path: "sounds/girl2.wav" },
+  { key: 69, path: "sounds/girl3.wav" },
+  { key: 82, path: "sounds/girl4.wav" },
+  { key: 65, path: "sounds/intheclub.wav" },
+  { key: 83, path: "sounds/bigpapa.wav" },
+  { key: 68, path: "sounds/jimmy.wav" },
+  { key: 70, path: "sounds/goody.wav" },
+  { key: 90, path: "sounds/dooo.wav" },
+  { key: 88, path: "sounds/sk.wav" },
+  { key: 67, path: "sounds/sp.wav" },
+  { key: 86, path: "sounds/cool.wav" }
+];
+
+const buffers = {};
+
 const context = new (window.AudioContext || window.webkitAudioContext)();
 const filter = context.createBiquadFilter();
 filter.type = "lowpass";
-filter.frequency.value = appState.filter;
 
-const audioInputs = document.querySelectorAll("audio");
-audioInputs.forEach((audio) => {
-  const source = context.createMediaElementSource(audio);
-  source.connect(filter)
-  filter.connect(context.destination);
+sounds.forEach(sound => {
+  fetch(sound.path)
+    .then(response => response.arrayBuffer())
+    .then(data => context.decodeAudioData(data, buffer => buffers[sound.key] = buffer));
 });
 
 const keys = document.querySelectorAll(".key");
@@ -43,8 +63,4 @@ keys.forEach(key => key.addEventListener("mousedown", (e) => mousePlaySound(key,
 window.addEventListener("keydown", keyboardPlaySound);
 
 const controllers = document.querySelectorAll("input[type='range']")
-controllers.forEach(controller => controller.addEventListener("input", () => {
-  appState[controller.name] = controller.value;
-  audioInputs.forEach(audio => audio.playbackRate = appState.playbackRate);
-  filter.frequency.value = appState.filter;
-}));
+controllers.forEach(controller => controller.addEventListener("input", () => appState[controller.name] = controller.value));
