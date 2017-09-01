@@ -1,9 +1,13 @@
 html {
   font-size: 10px;
-  background: url(http://wallpaperzone.co/wp-content/uploads/2016/07/Sean-Paul-Hairstyle-Wallpaper.jpg) bottom center;
+  background: url("images/background.jpg") bottom center;
   background-size: cover;
+  color: white;
+  text-shadow: 0 0 5px black;  
 }
-body,html {
+
+body,
+html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -16,11 +20,20 @@ body,html {
   justify-content: center;
 }
 
+h1 {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 32px;
+}
+
+.highlight {
+  color: #3cc1f2;
+}
+
 .keys {
   display: grid;
-  grid-template-columns: repeat(4, 100px);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 1rem;
-  grid-auto-rows: minmax(100px, auto);
 }
 
 .key {
@@ -30,14 +43,13 @@ body,html {
   padding: 1rem .5rem;
   transition: all .07s;
   text-align: center;
-  color: white;
   background: rgba(0,0,0,0.4);
-  text-shadow: 0 0 5px black;
   user-select: none;
 }
 
 .key:hover {
   cursor: pointer;
+  background-color: rgba(0,0,0,0.0);
 }
 
 .playing {
@@ -62,9 +74,7 @@ kbd {
 
 .controllers {
   text-align: center;
-  color: white;
   background: rgba(0,0,0,0.4);
-  text-shadow: 0 0 5px black;
   user-select: none;
   padding: 1rem .5rem;
   border-radius: 5px;
@@ -78,4 +88,15 @@ label {
 
 input[type="range"] {
   width: 100%;
+  cursor: pointer;
+}
+
+footer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+footer > a > img {
+  width: 24px;
 }

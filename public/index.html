@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <title>Sean Paul Soundboard</title>
+  <title>Play me Sean Paul</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="container">
+    <h1>Play me <span class="highlight">Sean Paul</span></h1>
     <div class="keys">
       <div data-key="81" class="key">
         <kbd>Q</kbd>
@@ -67,6 +67,8 @@
     </div>
   </div>
 
+  <footer><a href="https://github.com/tedcurrent/" target="_blank"><img src="images/GitHub-Mark-32px.png" /></a></footer>
+
   <audio data-key="81" src="sounds/girl1.wav"></audio>
   <audio data-key="87" src="sounds/girl2.wav"></audio>
   <audio data-key="69" src="sounds/girl3.wav"></audio>
@@ -80,59 +82,7 @@
   <audio data-key="67" src="sounds/sp.wav"></audio>
   <audio data-key="86" src="sounds/cool.wav"></audio>
 
-  <script>
-    function playSound(keyCode) {
-      const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
-      const key = document.querySelector(`.key[data-key="${keyCode}"]`);
-      if (!audio) return;
-
-      audio.currentTime = 0;
-      audio.play();
-      key.classList.add("playing");
-    }
-
-    function keyboardPlaySound(e) {
-      return !e.repeat && playSound(e.keyCode);
-    }
-
-    function mousePlaySound(key, e) {
-      return !e.repeat && key.contains(e.target) && playSound(key.getAttribute("data-key"));
-    }
-
-    function removeTransition(e) {
-      if (e.propertyName !== "transform") return;
-
-      this.classList.remove("playing");
-    }
-
-    const appState = {
-      playbackRate: 1.0,
-      filter: 18000
-    };
-
-    const context = new (window.AudioContext || window.webkitAudioContext)();
-    const filter = context.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.value = appState.filter;
-
-    const audioInputs = document.querySelectorAll("audio");
-    audioInputs.forEach((audio) => {
-      const source = context.createMediaElementSource(audio);
-      source.connect(filter).connect(context.destination);
-    });
-
-    const keys = document.querySelectorAll(".key");
-    keys.forEach(key => key.addEventListener("transitionend", removeTransition));
-    keys.forEach(key => key.addEventListener("click", (e) => mousePlaySound(key, e)));
-    window.addEventListener("keydown", keyboardPlaySound);
-
-    const controllers = document.querySelectorAll("input[type='range']")
-    controllers.forEach(controller => controller.addEventListener("input", () => {
-      appState[controller.name] = controller.value;
-      audioInputs.forEach(audio => audio.playbackRate = appState.playbackRate);
-      filter.frequency.value = appState.filter;
-    }));
-  </script>
+  <script src="main.js" type="text/javascript"></script>
 </body>
 
 </html>
