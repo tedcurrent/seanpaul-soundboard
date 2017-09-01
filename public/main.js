@@ -38,7 +38,7 @@ audioInputs.forEach((audio) => {
 
 const keys = document.querySelectorAll(".key");
 keys.forEach(key => key.addEventListener("transitionend", removeTransition));
-keys.forEach(key => key.addEventListener("click", (e) => mousePlaySound(key, e)));
+keys.forEach(key => key.addEventListener("mousedown", (e) => mousePlaySound(key, e)));
 window.addEventListener("keydown", keyboardPlaySound);
 
 const controllers = document.querySelectorAll("input[type='range']")
