@@ -47,10 +47,10 @@ h1 {
   text-align: center;
   background: rgba(0,0,0,0.4);
   user-select: none;
+  cursor: pointer;  
 }
 
 .key:hover {
-  cursor: pointer;
   background-color: rgba(0,0,0,0.0);
 }
 
