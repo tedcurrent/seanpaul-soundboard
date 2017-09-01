@@ -33,7 +33,8 @@ filter.frequency.value = appState.filter;
 const audioInputs = document.querySelectorAll("audio");
 audioInputs.forEach((audio) => {
   const source = context.createMediaElementSource(audio);
-  source.connect(filter).connect(context.destination);
+  source.connect(filter)
+  filter.connect(context.destination);
 });
 
 const keys = document.querySelectorAll(".key");
