@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Play me Sean Paul</title>
@@ -8,66 +9,70 @@
 
 <body>
   <div class="container">
-    <h1>Play me <span class="highlight">Sean Paul</span></h1>
-    <div class="keys">
-      <div data-key="81" class="key">
-        <kbd>Q</kbd>
-        <span class="sound">girl 1</span>
+    <div>
+      <h1>Play me <span class="highlight">Sean Paul</span></h1>
+      <div class="keys">
+        <div data-key="81" class="key">
+          <kbd>Q</kbd>
+          <span class="sound">girl 1</span>
+        </div>
+        <div data-key="87" class="key">
+          <kbd>W</kbd>
+          <span class="sound">girl 2</span>
+        </div>
+        <div data-key="69" class="key">
+          <kbd>E</kbd>
+          <span class="sound">girl 3</span>
+        </div>
+        <div data-key="82" class="key">
+          <kbd>R</kbd>
+          <span class="sound">girl 4</span>
+        </div>
+        <div data-key="65" class="key">
+          <kbd>A</kbd>
+          <span class="sound">club</span>
+        </div>
+        <div data-key="83" class="key">
+          <kbd>S</kbd>
+          <span class="sound">big papa</span>
+        </div>
+        <div data-key="68" class="key">
+          <kbd>D</kbd>
+          <span class="sound">jimmy</span>
+        </div>
+        <div data-key="70" class="key">
+          <kbd>F</kbd>
+          <span class="sound">goody</span>
+        </div>
+        <div data-key="90" class="key">
+          <kbd>Z</kbd>
+          <span class="sound">dooo</span>
+        </div>
+        <div data-key="88" class="key">
+          <kbd>X</kbd>
+          <span class="sound">sk</span>
+        </div>
+        <div data-key="67" class="key">
+          <kbd>C</kbd>
+          <span class="sound">sp</span>
+        </div>
+        <div data-key="86" class="key">
+          <kbd>V</kbd>
+          <span class="sound">cool</span>
+        </div>
       </div>
-      <div data-key="87" class="key">
-        <kbd>W</kbd>
-        <span class="sound">girl 2</span>
+      <div class="controllers">
+        <label for="playbackRate">Playback Rate:</label>
+        <input name="playbackRate" type="range" min="0.5" max="2.0" value="1" step="0.01" />
+        <label for="filter">Filter:</label>
+        <input name="filter" type="range" min="0" max="18000" value="18000" step="100" />
       </div>
-      <div data-key="69" class="key">
-        <kbd>E</kbd>
-        <span class="sound">girl 3</span>
-      </div>
-      <div data-key="82" class="key">
-        <kbd>R</kbd>
-        <span class="sound">girl 4</span>
-      </div>
-      <div data-key="65" class="key">
-        <kbd>A</kbd>
-        <span class="sound">club</span>
-      </div>
-      <div data-key="83" class="key">
-        <kbd>S</kbd>
-        <span class="sound">big papa</span>
-      </div>
-      <div data-key="68" class="key">
-        <kbd>D</kbd>
-        <span class="sound">jimmy</span>
-      </div>
-      <div data-key="70" class="key">
-        <kbd>F</kbd>
-        <span class="sound">goody</span>
-      </div>
-      <div data-key="90" class="key">
-        <kbd>Z</kbd>
-        <span class="sound">dooo</span>
-      </div>
-      <div data-key="88" class="key">
-        <kbd>X</kbd>
-        <span class="sound">sk</span>
-      </div>
-      <div data-key="67" class="key">
-        <kbd>C</kbd>
-        <span class="sound">sp</span>
-      </div>
-      <div data-key="86" class="key">
-        <kbd>V</kbd>
-        <span class="sound">cool</span>
-      </div>
-    </div>
-    <div class="controllers">
-      <label for="playbackRate">Playback Rate:</label>
-      <input name="playbackRate" type="range" min="0.5" max="2.0" value="1" step="0.01" />
-      <label for="filter">Filter:</label>
-      <input name="filter" type="range" min="0" max="18000" value="18000" step="100" />
     </div>
   </div>
-
-  <footer><a href="https://github.com/tedcurrent/" target="_blank"><img src="images/GitHub-Mark-32px.png" /></a></footer>
+  <footer>
+    Suggest edits on <a href="https://github.com/tedcurrent/" target="_blank">Github</a>
+    - audio by Sean Paul
+  </footer>
 
   <audio data-key="81" src="sounds/girl1.wav"></audio>
   <audio data-key="87" src="sounds/girl2.wav"></audio>
